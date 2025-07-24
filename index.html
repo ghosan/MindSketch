@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindSketch – Visualiza tus clases con IA</title>
-  <meta name="description" content="Convierte tus clases en mapas mentales visuales con IA. Ahorra tiempo y potencia tu impacto educativo con MindSketch.">
+  <title>MindSketch – Convierte audios de reuniones en mapas mentales con IA</title>
+  <meta name="description" content="Transforma automáticamente los audios de tus reuniones, clases y conferencias en mapas mentales visuales y resúmenes estructurados con IA.">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -33,6 +33,17 @@
     .gradient-bg {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
+    .audio-wave {
+      animation: audioWave 2s ease-in-out infinite;
+    }
+    .audio-wave.delay-1 { animation-delay: 0.2s; }
+    .audio-wave.delay-2 { animation-delay: 0.4s; }
+    .audio-wave.delay-3 { animation-delay: 0.6s; }
+    .audio-wave.delay-4 { animation-delay: 0.8s; }
+    @keyframes audioWave {
+      0%, 100% { height: 8px; }
+      50% { height: 24px; }
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -41,103 +52,142 @@
   <!-- Hero moderno -->
   <section class="relative bg-gray-900 text-white">
     <div class="absolute inset-0">
-      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=2071&q=80" alt="Fondo educativo" class="w-full h-full object-cover opacity-30" />
+      <img src="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=2071&q=80" alt="Reunión de negocios" class="w-full h-full object-cover opacity-30" />
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-6 py-32 text-center">
-      <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Convierte tus clases en mapas mentales visuales con IA</h1>
-      <p class="text-xl max-w-2xl mx-auto mb-8 text-gray-200">Con <strong>MindSketch</strong>, resume contenidos complejos en segundos, ahorra tiempo y potencia tu impacto educativo.</p>
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Convierte audios de reuniones en mapas mentales con IA</h1>
+      <p class="text-xl max-w-2xl mx-auto mb-8 text-gray-200">Con <strong>MindSketch</strong>, transforma automáticamente grabaciones de reuniones, clases y conferencias en resúmenes visuales y mapas mentales estructurados.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="#contacto" class="inline-block bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-6 py-3 rounded-full transition shadow-md">Solicitar acceso anticipado</a>
+        <a href="#contacto" class="inline-block bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-6 py-3 rounded-full transition shadow-md">🎧 Probar con mi audio</a>
         <a href="#como-funciona" class="inline-block border-2 border-white hover:bg-white hover:text-gray-900 text-white text-lg font-semibold px-6 py-3 rounded-full transition">Ver cómo funciona</a>
       </div>
     </div>
   </section>
 
-  <!-- Ejemplo de Mapa Mental -->
+  <!-- Ejemplo de Resultado -->
   <section class="py-20 px-6 md:px-16 bg-gradient-to-br from-blue-50 to-indigo-100">
     <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">Mira lo que puedes crear</h2>
-      <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Desde una clase sobre "Fotosíntesis" hasta conceptos complejos de "Machine Learning" - MindSketch los convierte en mapas visuales claros y atractivos.</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">De audio a insights visuales en minutos</h2>
+      <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Desde reuniones de equipo hasta conferencias académicas - MindSketch extrae lo esencial y lo convierte en mapas mentales claros.</p>
       
-      <!-- Mapa Mental Interactivo -->
-      <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
-        <h3 class="text-2xl font-bold mb-8 text-gray-800">Ejemplo: Mapa Mental - "Fotosíntesis"</h3>
-        <div class="relative">
-          <!-- Nodo Central -->
-          <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div class="mind-map-node bg-green-500 text-white px-6 py-4 rounded-full text-lg font-bold shadow-lg cursor-pointer">
-              FOTOSÍNTESIS
+      <!-- Antes y Después -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <!-- Audio Original -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+          <div class="flex items-center justify-center mb-6">
+            <div class="bg-red-500 w-4 h-4 rounded-full animate-pulse mr-3"></div>
+            <span class="text-lg font-semibold text-gray-700">Audio de reunión - 45 min</span>
+          </div>
+          
+          <!-- Simulación de onda de audio -->
+          <div class="flex items-end justify-center space-x-1 mb-6 h-16">
+            <div class="audio-wave bg-blue-400 w-2 rounded-full"></div>
+            <div class="audio-wave delay-1 bg-blue-500 w-2 rounded-full"></div>
+            <div class="audio-wave delay-2 bg-blue-400 w-2 rounded-full"></div>
+            <div class="audio-wave delay-3 bg-blue-600 w-2 rounded-full"></div>
+            <div class="audio-wave delay-4 bg-blue-400 w-2 rounded-full"></div>
+            <div class="audio-wave bg-blue-500 w-2 rounded-full"></div>
+            <div class="audio-wave delay-1 bg-blue-400 w-2 rounded-full"></div>
+            <div class="audio-wave delay-2 bg-blue-600 w-2 rounded-full"></div>
+            <div class="audio-wave delay-3 bg-blue-400 w-2 rounded-full"></div>
+            <div class="audio-wave delay-4 bg-blue-500 w-2 rounded-full"></div>
+          </div>
+          
+          <div class="text-left space-y-3 text-sm text-gray-600">
+            <p class="italic">"Necesitamos revisar el presupuesto del Q2..."</p>
+            <p class="italic">"Los indicadores muestran un crecimiento..."</p>
+            <p class="italic">"¿Qué opinas sobre la estrategia de marketing?"</p>
+            <p class="text-center text-gray-400">+ 42 minutos más...</p>
+          </div>
+        </div>
+        
+        <!-- Resultado: Mapa Mental -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+          <h3 class="text-xl font-bold mb-6 text-gray-800">📊 Mapa Mental Generado</h3>
+          <div class="relative">
+            <!-- Nodo Central -->
+            <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div class="mind-map-node bg-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                REUNIÓN Q2
+              </div>
+            </div>
+            
+            <!-- Nodos Secundarios -->
+            <div class="relative h-64">
+              <div class="absolute top-2 left-4">
+                <div class="mind-map-node bg-green-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
+                  <div class="font-semibold">Presupuesto</div>
+                  <div class="text-xs mt-1">Revisión Q2</div>
+                </div>
+              </div>
+              
+              <div class="absolute top-2 right-4">
+                <div class="mind-map-node bg-blue-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
+                  <div class="font-semibold">KPIs</div>
+                  <div class="text-xs mt-1">Crecimiento +15%</div>
+                </div>
+              </div>
+              
+              <div class="absolute bottom-2 left-8">
+                <div class="mind-map-node bg-orange-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
+                  <div class="font-semibold">Marketing</div>
+                  <div class="text-xs mt-1">Nueva estrategia</div>
+                </div>
+              </div>
+              
+              <div class="absolute bottom-2 right-8">
+                <div class="mind-map-node bg-red-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
+                  <div class="font-semibold">Acciones</div>
+                  <div class="text-xs mt-1">3 tareas</div>
+                </div>
+              </div>
             </div>
           </div>
           
-          <!-- Nodos Secundarios -->
-          <div class="relative h-80 md:h-96">
-            <!-- Reactivos -->
-            <div class="absolute top-4 left-8 md:left-16">
-              <div class="mind-map-node bg-blue-400 text-white px-4 py-2 rounded-lg shadow-md cursor-pointer">
-                <div class="font-semibold">Reactivos</div>
-                <div class="text-sm mt-1">CO₂ + H₂O</div>
-              </div>
-              <div class="w-px h-16 bg-gray-300 mx-auto mt-2"></div>
-            </div>
-            
-            <!-- Productos -->
-            <div class="absolute top-4 right-8 md:right-16">
-              <div class="mind-map-node bg-orange-400 text-white px-4 py-2 rounded-lg shadow-md cursor-pointer">
-                <div class="font-semibold">Productos</div>
-                <div class="text-sm mt-1">Glucosa + O₂</div>
-              </div>
-              <div class="w-px h-16 bg-gray-300 mx-auto mt-2"></div>
-            </div>
-            
-            <!-- Proceso -->
-            <div class="absolute bottom-4 left-8 md:left-20">
-              <div class="mind-map-node bg-purple-400 text-white px-4 py-2 rounded-lg shadow-md cursor-pointer">
-                <div class="font-semibold">Ubicación</div>
-                <div class="text-sm mt-1">Cloroplastos</div>
-              </div>
-              <div class="w-px h-16 bg-gray-300 mx-auto mb-2"></div>
-            </div>
-            
-            <!-- Energía -->
-            <div class="absolute bottom-4 right-8 md:right-20">
-              <div class="mind-map-node bg-yellow-400 text-white px-4 py-2 rounded-lg shadow-md cursor-pointer">
-                <div class="font-semibold">Energía</div>
-                <div class="text-sm mt-1">Luz Solar</div>
-              </div>
-              <div class="w-px h-16 bg-gray-300 mx-auto mb-2"></div>
-            </div>
+          <!-- Resumen adicional -->
+          <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+            <h4 class="font-semibold text-sm mb-2">📝 Resumen ejecutivo:</h4>
+            <ul class="text-xs text-gray-600 space-y-1">
+              <li>• Presupuesto Q2 necesita ajustes del 12%</li>
+              <li>• KPIs muestran crecimiento del 15%</li>
+              <li>• Nueva estrategia de marketing aprobada</li>
+              <li>• 3 action items asignados</li>
+            </ul>
           </div>
-        </div>
-        
-        <div class="mt-8 text-sm text-gray-500 italic">
-          ✨ Generado automáticamente en 3 segundos desde tu contenido de clase
         </div>
       </div>
       
-      <!-- Ejemplos adicionales -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <div class="gradient-bg text-white px-4 py-2 rounded-lg text-center font-semibold mb-4">
-            Machine Learning
+      <!-- Formatos soportados -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h3 class="text-xl font-bold mb-6 text-gray-800">Formatos soportados</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <span class="text-2xl">🎵</span>
+            </div>
+            <div class="font-semibold text-sm">MP3</div>
+            <div class="text-xs text-gray-500">Hasta 2 horas</div>
           </div>
-          <div class="flex flex-wrap gap-2 justify-center">
-            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Supervisado</span>
-            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">No Supervisado</span>
-            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Redes Neuronales</span>
-            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">Algoritmos</span>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <span class="text-2xl">🎤</span>
+            </div>
+            <div class="font-semibold text-sm">WAV</div>
+            <div class="text-xs text-gray-500">Alta calidad</div>
           </div>
-        </div>
-        
-        <div class="bg-white rounded-xl shadow-lg p-6">
-          <div class="gradient-bg text-white px-4 py-2 rounded-lg text-center font-semibold mb-4">
-            Historia Medieval
+          <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <span class="text-2xl">📄</span>
+            </div>
+            <div class="font-semibold text-sm">PDF</div>
+            <div class="text-xs text-gray-500">Documentos</div>
           </div>
-          <div class="flex flex-wrap gap-2 justify-center">
-            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Feudalismo</span>
-            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Cruzadas</span>
-            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Caballería</span>
-            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Peste Negra</span>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <span class="text-2xl">📝</span>
+            </div>
+            <div class="font-semibold text-sm">DOCX</div>
+            <div class="text-xs text-gray-500">Word docs</div>
           </div>
         </div>
       </div>
@@ -149,7 +199,7 @@
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">¿Cómo funciona MindSketch?</h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">En solo 3 pasos simples, convierte cualquier contenido educativo en mapas mentales profesionales.</p>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Desde tu grabación hasta mapas mentales profesionales en 3 pasos automatizados.</p>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -159,15 +209,16 @@
             1
           </div>
           <div class="bg-gray-50 rounded-xl p-6 mb-6">
-            <div class="bg-white border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-              <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-              </svg>
-              <p class="text-sm text-gray-600">Sube tu contenido</p>
+            <div class="bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-white text-lg">🎙️</span>
+              </div>
+              <p class="text-sm text-gray-600">Sube tu audio MP3/WAV</p>
+              <p class="text-xs text-gray-400 mt-1">O arrastra tu PDF/DOCX</p>
             </div>
           </div>
-          <h3 class="text-xl font-semibold mb-3">Carga tu material</h3>
-          <p class="text-gray-600">Sube tus apuntes, PDFs, presentaciones o simplemente escribe tu contenido directamente en la plataforma.</p>
+          <h3 class="text-xl font-semibold mb-3">Sube tu contenido</h3>
+          <p class="text-gray-600">Carga grabaciones de reuniones, clases, conferencias, o documentos. Soportamos archivos de hasta 2 horas de duración.</p>
         </div>
         
         <!-- Paso 2 -->
@@ -177,15 +228,20 @@
           </div>
           <div class="bg-gray-50 rounded-xl p-6 mb-6">
             <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-6 text-white text-center">
-              <div class="flex items-center justify-center mb-2">
-                <div class="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent"></div>
-                <span class="ml-2 text-sm">IA procesando...</span>
+              <div class="flex flex-col items-center mb-2">
+                <div class="flex space-x-1 mb-2">
+                  <div class="w-2 h-6 bg-white opacity-80 rounded-full animate-pulse"></div>
+                  <div class="w-2 h-4 bg-white opacity-60 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                  <div class="w-2 h-8 bg-white opacity-90 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                  <div class="w-2 h-5 bg-white opacity-70 rounded-full animate-pulse" style="animation-delay: 0.6s"></div>
+                </div>
+                <span class="text-sm">IA transcribiendo y analizando...</span>
               </div>
-              <div class="text-xs opacity-80">Analizando conceptos clave</div>
+              <div class="text-xs opacity-80">Extrayendo conceptos clave</div>
             </div>
           </div>
-          <h3 class="text-xl font-semibold mb-3">IA analiza el contenido</h3>
-          <p class="text-gray-600">Nuestra inteligencia artificial identifica conceptos clave, relaciones y estructura la información automáticamente.</p>
+          <h3 class="text-xl font-semibold mb-3">IA procesa el contenido</h3>
+          <p class="text-gray-600">Nuestra IA transcribe el audio, identifica temas principales, speakers, y estructura la información automáticamente.</p>
         </div>
         
         <!-- Paso 3 -->
@@ -195,59 +251,69 @@
           </div>
           <div class="bg-gray-50 rounded-xl p-6 mb-6">
             <div class="bg-white rounded-lg p-4 border">
-              <div class="flex items-center justify-center space-x-2 mb-2">
-                <div class="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center text-white text-xs font-bold">A</div>
-                <div class="w-1 h-px bg-gray-300"></div>
-                <div class="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center text-white text-xs font-bold">B</div>
+              <div class="text-center mb-3">
+                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold mx-auto mb-2">📊</div>
+                <div class="text-xs text-gray-600">Mapa mental + resumen</div>
               </div>
-              <div class="text-xs text-gray-600 text-center">Mapa mental listo</div>
+              <div class="flex justify-center space-x-2">
+                <div class="w-6 h-6 bg-blue-400 rounded-full"></div>
+                <div class="w-1 h-px bg-gray-300 mt-3"></div>
+                <div class="w-6 h-6 bg-green-400 rounded-full"></div>
+                <div class="w-1 h-px bg-gray-300 mt-3"></div>
+                <div class="w-6 h-6 bg-orange-400 rounded-full"></div>
+              </div>
             </div>
           </div>
-          <h3 class="text-xl font-semibold mb-3">Obtén tu mapa mental</h3>
-          <p class="text-gray-600">Recibe mapas mentales visuales, editables y listos para compartir con tus estudiantes o en redes sociales.</p>
+          <h3 class="text-xl font-semibold mb-3">Recibe tus insights</h3>
+          <p class="text-gray-600">Obtén mapas mentales interactivos, resúmenes ejecutivos, y action items listos para compartir o descargar.</p>
         </div>
       </div>
       
       <div class="text-center mt-12">
         <div class="bg-blue-50 rounded-2xl p-8 inline-block">
-          <p class="text-lg font-semibold text-blue-900 mb-2">⚡ Proceso completo en menos de 30 segundos</p>
-          <p class="text-blue-700">Desde upload hasta mapa mental terminado</p>
+          <p class="text-lg font-semibold text-blue-900 mb-2">⚡ Proceso completo en 2-5 minutos</p>
+          <p class="text-blue-700">Dependiendo de la duración de tu audio</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Beneficios -->
+  <!-- Casos de uso -->
   <section class="py-20 px-6 md:px-16 bg-gray-50">
     <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-12 text-gray-900">¿Por qué usar MindSketch?</h2>
+      <h2 class="text-3xl md:text-4xl font-bold mb-12 text-gray-900">¿Para qué puedes usar MindSketch?</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div class="text-left bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition">
           <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-            </svg>
+            <span class="text-2xl">👥</span>
           </div>
-          <h3 class="text-xl font-semibold mb-3">Visualiza tus ideas</h3>
-          <p class="text-gray-600">Mapas mentales y esquemas automáticos que convierten tus clases en conocimiento visual y duradero. Mejora la comprensión hasta un 65%.</p>
+          <h3 class="text-xl font-semibold mb-3">Reuniones de trabajo</h3>
+          <p class="text-gray-600 mb-4">Convierte largas reuniones en resúmenes visuales con action items claros. Nunca más pierdas detalles importantes.</p>
+          <div class="text-sm text-blue-600">
+            ✓ Actas automáticas ✓ Action items ✓ Participantes identificados
+          </div>
         </div>
+        
         <div class="text-left bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition">
           <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <span class="text-2xl">🎓</span>
           </div>
-          <h3 class="text-xl font-semibold mb-3">Ahorra tiempo real</h3>
-          <p class="text-gray-600">Elimina la necesidad de resumir a mano. Genera contenidos reutilizables en segundos. Los profesores ahorran hasta 5 horas por semana.</p>
+          <h3 class="text-xl font-semibold mb-3">Clases y conferencias</h3>
+          <p class="text-gray-600 mb-4">Transforma conferencias educativas en mapas de conocimiento que tus estudiantes puedan revisar fácilmente.</p>
+          <div class="text-sm text-green-600">
+            ✓ Conceptos clave ✓ Estructura visual ✓ Material de repaso
+          </div>
         </div>
+        
         <div class="text-left bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition">
           <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
+            <span class="text-2xl">🎤</span>
           </div>
-          <h3 class="text-xl font-semibold mb-3">Impulsa tu docencia</h3>
-          <p class="text-gray-600">Comparte materiales de calidad en redes o LMS y refuerza tu marca como educador innovador. Aumenta el engagement estudiantil.</p>
+          <h3 class="text-xl font-semibold mb-3">Entrevistas y podcasts</h3>
+          <p class="text-gray-600 mb-4">Extrae insights valiosos de entrevistas largas y conviértelos en contenido visual para redes sociales.</p>
+          <div class="text-sm text-purple-600">
+            ✓ Quotes destacados ✓ Temas principales ✓ Content marketing
+          </div>
         </div>
       </div>
     </div>
@@ -257,8 +323,8 @@
   <section id="contacto" class="py-20 px-6 md:px-20 bg-white">
     <div class="max-w-xl mx-auto bg-white p-10 rounded-2xl shadow-2xl border">
       <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-4 text-gray-900">Solicita acceso anticipado</h2>
-        <p class="text-gray-600">Únete a más de 500 educadores que ya están transformando sus clases</p>
+        <h2 class="text-3xl font-bold mb-4 text-gray-900">Prueba MindSketch gratis</h2>
+        <p class="text-gray-600">Únete a más de 800 profesionales que ya están transformando sus reuniones</p>
         <div class="flex justify-center space-x-1 mt-4">
           <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
           <div class="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -280,20 +346,27 @@
           <input type="email" name="email" id="email" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
         </div>
         <div>
-          <label for="institucion" class="block text-sm font-medium text-gray-700 mb-2">Institución educativa</label>
-          <input type="text" name="institucion" id="institucion" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+          <label for="empresa" class="block text-sm font-medium text-gray-700 mb-2">Empresa/Organización</label>
+          <input type="text" name="empresa" id="empresa" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
         </div>
         <div>
-          <label for="mensaje" class="block text-sm font-medium text-gray-700 mb-2">¿Qué materias enseñas? (opcional)</label>
-          <textarea name="mensaje" id="mensaje" rows="3" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"></textarea>
+          <label for="uso" class="block text-sm font-medium text-gray-700 mb-2">¿Para qué usarías MindSketch?</label>
+          <select name="uso" id="uso" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+            <option value="">Selecciona una opción</option>
+            <option value="reuniones">Reuniones de trabajo</option>
+            <option value="clases">Clases y educación</option>
+            <option value="entrevistas">Entrevistas/Podcasts</option>
+            <option value="conferencias">Conferencias</option>
+            <option value="otro">Otro</option>
+          </select>
         </div>
         <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 rounded-xl font-semibold transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-          🚀 Solicitar acceso gratuito
+          🎧 Empezar prueba gratuita
         </button>
       </form>
       
       <div class="mt-6 text-center text-sm text-gray-500">
-        <p>✅ Acceso gratuito durante beta • ✅ Sin compromiso • ✅ Soporte prioritario</p>
+        <p>✅ Primera transcripción gratis • ✅ Sin tarjeta de crédito • ✅ Soporte en español</p>
       </div>
     </div>
   </section>
@@ -303,7 +376,7 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="mb-8">
         <h3 class="text-2xl font-bold mb-2">MindSketch</h3>
-        <p class="text-gray-400">Revolucionando la educación con IA</p>
+        <p class="text-gray-400">De audio a insights visuales con IA</p>
       </div>
       <div class="border-t border-gray-800 pt-8">
         <p class="text-gray-400">© 2025 <strong>MindSketch</strong> · Todos los derechos reservados</p>
