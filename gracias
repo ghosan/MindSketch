@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Gracias por tu feedback! - MindSketch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #f39c12;
+      animation: confetti-fall 3s ease-out forwards;
+    }
+    .confetti:nth-child(odd) {
+      background: #e74c3c;
+      animation-delay: 0.5s;
+    }
+    .confetti:nth-child(even) {
+      background: #3498db;
+      animation-delay: 1s;
+    }
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex items-center justify-center">
+  
+  <!-- Confetti Animation -->
+  <div class="confetti" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="confetti" style="left: 20%; animation-delay: 0.2s;"></div>
+  <div class="confetti" style="left: 30%; animation-delay: 0.4s;"></div>
+  <div class="confetti" style="left: 40%; animation-delay: 0.6s;"></div>
+  <div class="confetti" style="left: 50%; animation-delay: 0.8s;"></div>
+  <div class="confetti" style="left: 60%; animation-delay: 1s;"></div>
+  <div class="confetti" style="left: 70%; animation-delay: 1.2s;"></div>
+  <div class="confetti" style="left: 80%; animation-delay: 1.4s;"></div>
+  <div class="confetti" style="left: 90%; animation-delay: 1.6s;"></div>
+
+  <div class="max-w-2xl mx-auto px-6 text-center">
+    
+    <!-- Card principal -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden">
+      
+      <!-- Patrón de fondo sutil -->
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-4 left-4 w-20 h-20 gradient-bg rounded-full"></div>
+        <div class="absolute bottom-4 right-4 w-16 h-16 bg-blue-400 rounded-full"></div>
+        <div class="absolute top-1/2 left-1/3 w-12 h-12 bg-purple-400 rounded-full"></div>
+      </div>
+      
+      <div class="relative z-10">
+        
+        <!-- Emoji principal -->
+        <div class="text-6xl mb-6 animate-bounce">🙏</div>
+        
+        <!-- Título principal -->
+        <h1 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+          ¡Muchísimas gracias por tu feedback!
+        </h1>
+        
+        <!-- Mensaje personal de Luismi -->
+        <div class="bg-blue-50 rounded-2xl p-6 mb-8 text-left">
+          <div class="flex items-start space-x-4">
+            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              L
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-2">Un mensaje personal de Luismi:</h3>
+              <p class="text-gray-700 leading-relaxed">
+                Tu opinión es <strong>oro puro</strong> para mí. Cada comentario, sugerencia y crítica constructiva me ayuda a entender mejor cómo hacer que MindSketch sea realmente útil para personas como tú.
+              </p>
+              <p class="text-gray-700 mt-3 leading-relaxed">
+                Voy a leer tu feedback con mucha atención y te prometo que si tienes alguna pregunta o quieres profundizar en algún punto, <strong>te responderé personalmente</strong> muy pronto.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Stats o próximos pasos -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div class="bg-green-50 rounded-xl p-4">
+            <div class="text-2xl mb-2">📊</div>
+            <div class="text-sm font-semibold text-green-800">Tu feedback #247</div>
+            <div class="text-xs text-green-600">Cada uno cuenta</div>
+          </div>
+          <div class="bg-blue-50 rounded-xl p-4">
+            <div class="text-2xl mb-2">⚡</div>
+            <div class="text-sm font-semibold text-blue-800">Respuesta en 24-48h</div>
+            <div class="text-xs text-blue-600">Revisar tu email</div>
+          </div>
+          <div class="bg-purple-50 rounded-xl p-4">
+            <div class="text-2xl mb-2">🚀</div>
+            <div class="text-sm font-semibold text-purple-800">Mejoras continuas</div>
+            <div class="text-xs text-purple-600">Basadas en feedback</div>
+          </div>
+        </div>
+        
+        <!-- CTA secundario -->
+        <div class="border-t pt-6">
+          <p class="text-gray-600 mb-4">¿Tienes más ideas o quieres estar al tanto de los avances?</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="mailto:luis.ilunga@protonmail.com" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-full transition shadow-lg hover:shadow-xl">
+              📧 Escribir a Luismi
+            </a>
+            <a href="https://linkedin.com/in/luismilunga" target="_blank" class="inline-block border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 text-gray-700 font-semibold px-6 py-3 rounded-full transition">
+              💼 Conectar en LinkedIn
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Footer message -->
+    <div class="mt-8 text-center">
+      <p class="text-gray-500 text-sm">
+        Construyendo MindSketch paso a paso, con la ayuda de personas increíbles como tú ❤️
+      </p>
+    </div>
+    
+  </div>
+
+  <!-- Script para limpiar confetti después de la animación -->
+  <script>
+    setTimeout(() => {
+      const confetti = document.querySelectorAll('.confetti');
+      confetti.forEach(c => c.remove());
+    }, 4000);
+  </script>
+
+</body>
+</html>
