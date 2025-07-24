@@ -319,12 +319,12 @@
     </div>
   </section>
 
-  <!-- Contacto -->
+  <!-- Feedback -->
   <section id="contacto" class="py-20 px-6 md:px-20 bg-white">
     <div class="max-w-xl mx-auto bg-white p-10 rounded-2xl shadow-2xl border">
       <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-4 text-gray-900">Prueba MindSketch gratis</h2>
-        <p class="text-gray-600">Únete a más de 800 profesionales que ya están transformando sus reuniones</p>
+        <h2 class="text-3xl font-bold mb-4 text-gray-900">¿Qué piensas de MindSketch?</h2>
+        <p class="text-gray-600">Tu opinión es fundamental para mejorar esta solución. Comparte tu feedback y ayúdanos a crear la herramienta perfecta.</p>
         <div class="flex justify-center space-x-1 mt-4">
           <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
           <div class="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -335,8 +335,9 @@
       </div>
       
       <form action="https://formsubmit.co/luis.ilunga@protonmail.com" method="POST" class="space-y-6">
-        <input type="hidden" name="_next" value="https://tusitio.com/gracias.html">
+        <input type="hidden" name="_next" value="https://mindsketch-gracias.netlify.app">
         <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="Nuevo feedback sobre MindSketch">
         <div>
           <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
           <input type="text" name="nombre" id="nombre" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
@@ -344,10 +345,6 @@
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo electrónico</label>
           <input type="email" name="email" id="email" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
-        </div>
-        <div>
-          <label for="empresa" class="block text-sm font-medium text-gray-700 mb-2">Empresa/Organización</label>
-          <input type="text" name="empresa" id="empresa" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
         </div>
         <div>
           <label for="uso" class="block text-sm font-medium text-gray-700 mb-2">¿Para qué usarías MindSketch?</label>
@@ -360,13 +357,17 @@
             <option value="otro">Otro</option>
           </select>
         </div>
+        <div>
+          <label for="feedback" class="block text-sm font-medium text-gray-700 mb-2">Tu feedback sobre la solución</label>
+          <textarea name="feedback" id="feedback" rows="4" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="¿Qué te parece la idea? ¿La usarías? ¿Qué mejorarías? ¿Pagarías por ella? Cuéntanos todo..."></textarea>
+        </div>
         <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 rounded-xl font-semibold transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-          🎧 Empezar prueba gratuita
+          💭 Enviar mi feedback
         </button>
       </form>
       
       <div class="mt-6 text-center text-sm text-gray-500">
-        <p>✅ Primera transcripción gratis • ✅ Sin tarjeta de crédito • ✅ Soporte en español</p>
+        <p>✅ Tu opinión importa • ✅ Respuesta personalizada • ✅ Ayúdanos a mejorar</p>
       </div>
     </div>
   </section>
@@ -385,5 +386,4 @@
   </footer>
 
 </body>
-</html>
 </html>
