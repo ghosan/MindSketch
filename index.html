@@ -1,389 +1,1227 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindSketch – Convierte audios de reuniones en mapas mentales con IA</title>
-  <meta name="description" content="Transforma automáticamente los audios de tus reuniones, clases y conferencias en mapas mentales visuales y resúmenes estructurados con IA.">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SuperLiga ⚽ — La Porra Más Moderna de LaLiga 2025–2026</title>
+  <meta name="description" content="¡Descubre SuperLiga! La plataforma más moderna para pronosticar partidos de LaLiga. Compite con amigos, crea ligas privadas y escala en la clasificación. ¡Gratis y fácil de usar!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
+    :root{
+      /* Colores modernos con gradientes */
+      --dark: #0f0f23;         /* header más oscuro */
+      --ink: #1a1a2e;          /* texto primario */
+      --muted: #8b8b9a;        /* texto secundario */
+      --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* fondo con gradiente */
+      --bg-light: #f8fafc;     /* fondo alternativo */
+      --card: rgba(255, 255, 255, 0.95); /* tarjetas con transparencia */
+      --card-glass: rgba(255, 255, 255, 0.1); /* efecto glassmorphism */
+      --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* gradiente primario */
+      --primary-solid: #667eea;
+      --primary-600: #5a67d8;
+      --accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* gradiente de acento */
+      --success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --radius: 20px;          /* bordes más redondeados */
+      --radius-sm: 12px;
+      --shadow: 0 20px 40px rgba(0,0,0,0.1);
+      --shadow-lg: 0 25px 50px rgba(0,0,0,0.15);
+      --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --backdrop: blur(10px);
     }
-    .mind-map-node {
-      transition: all 0.3s ease;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; 
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif; 
+      color:var(--ink); 
+      background:var(--bg);
+      background-attachment: fixed;
+      min-height: 100vh;
     }
-    .mind-map-node:hover {
+    a{color:inherit; text-decoration:none}
+    
+    /* Animaciones globales */
+    * {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== Header superior (glassmorphism) ===== */
+    .topbar{
+      background: rgba(15, 15, 35, 0.8);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cfd6e4;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar .inner{
+      max-width:1200px; 
+      margin:0 auto; 
+      padding:12px 20px; 
+      display:flex; 
+      align-items:center; 
+      gap:20px;
+    }
+    .brand{
+      display:flex; 
+      align-items:center; 
+      gap:12px; 
+      color:#e8eef8;
+    }
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:var(--radius-sm);
+      background: var(--primary);
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:800;
+      font-size:18px;
+      box-shadow: var(--shadow);
+    }
+    .brand .name{
+      font-weight:700; 
+      font-size:22px; 
+      letter-spacing:.3px;
+      background: linear-gradient(135deg, #e8eef8, #a8b2d1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .top-info{
+      margin-left:auto; 
+      display:flex; 
+      align-items:center; 
+      gap:20px; 
+      font-weight:600;
+    }
+    .top-info span{
+      display:inline-flex; 
+      align-items:center; 
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ===== Menú principal (glassmorphism) ===== */
+    .mainnav{
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 20px;
+    }
+    .mainnav .inner{
+      max-width:1200px; 
+      margin:0 auto; 
+      padding:16px 20px; 
+      display:flex; 
+      align-items:center; 
+      gap:20px;
+    }
+    .menu{
+      display:flex; 
+      align-items:center; 
+      gap:24px; 
+      flex-wrap:wrap;
+    }
+    .menu a{
+      font-weight:600; 
+      color: rgba(255, 255, 255, 0.9);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .menu a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    .menu a:hover::before {
+      left: 100%;
+    }
+    .menu a:hover, .menu a[aria-current="page"]{
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .sep{
+      width:1px; 
+      height:20px; 
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .search{
+      margin-left:auto; 
+      display:flex; 
+      align-items:center; 
+      gap:12px;
+    }
+    .search input{
+      width:280px; 
+      max-width:48vw; 
+      padding:12px 16px; 
+      border-radius:999px; 
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+    }
+    .search input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .search input:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    /* ===== Carrusel (hero) moderno ===== */
+    .hero{
+      max-width:1200px; 
+      margin:20px auto 0; 
+      padding:0 20px;
+    }
+    .carousel{
+      position:relative; 
+      border-radius:var(--radius); 
+      overflow:hidden; 
+      box-shadow: var(--shadow-lg);
+      background: var(--card-glass);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .slide{
+      position:relative; 
+      height:480px; 
+      background:#dde7f9; 
+      display:none;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .slide.active{display:block}
+    .slide::after{
+      content:""; 
+      position:absolute; 
+      inset:0; 
+      background:linear-gradient(135deg,rgba(0,0,0,.6),rgba(0,0,0,.2) 60%, rgba(0,0,0,.1));
+    }
+    .slide .img{
+      position:absolute; 
+      inset:0; 
+      background-size:cover; 
+      background-position:center;
+      transition: transform 0.8s ease;
+    }
+    .slide:hover .img{
       transform: scale(1.05);
     }
-    .step-animation {
-      animation: fadeInUp 0.6s ease-out forwards;
-      opacity: 0;
-      transform: translateY(30px);
+    .slide .copy{
+      position:relative; 
+      z-index:2; 
+      color:#fff; 
+      padding:40px; 
+      max-width:700px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
     }
-    .step-animation.delay-1 { animation-delay: 0.2s; }
-    .step-animation.delay-2 { animation-delay: 0.4s; }
-    .step-animation.delay-3 { animation-delay: 0.6s; }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .copy h1{
+      margin:0 0 16px; 
+      font-size:36px; 
+      line-height:1.2;
+      font-weight: 800;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
-    .gradient-bg {
+    .copy p{
+      margin:0 0 24px; 
+      color:#e9edf6;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .btn{
+      display:inline-flex; 
+      align-items:center; 
+      gap:10px; 
+      padding:14px 24px; 
+      border-radius:var(--radius-sm); 
+      font-weight:700; 
+      border:1px solid transparent; 
+      cursor:pointer;
+      font-size: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn:hover::before {
+      left: 100%;
+    }
+    .btn.primary{
+      background: var(--primary);
+      color:#fff;
+      box-shadow: var(--shadow);
+    }
+    .btn.primary:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    .btn.white{
+      background:rgba(255, 255, 255, 0.9);
+      color:#1a1a2e; 
+      border-color:rgba(255, 255, 255, 0.3);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+    }
+    .btn.white:hover{
+      background: #fff;
+      transform: translateY(-2px);
+    }
+    .dots{
+      position:absolute; 
+      right:24px; 
+      bottom:20px; 
+      display:flex; 
+      gap:8px; 
+      z-index:5;
+    }
+    .dot{
+      width:12px; 
+      height:12px; 
+      border-radius:999px; 
+      background:rgba(255, 255, 255, 0.4); 
+      border:2px solid rgba(255, 255, 255, 0.6); 
+      cursor:pointer;
+      transition: all 0.3s ease;
+    }
+    .dot:hover{
+      background:rgba(255, 255, 255, 0.7);
+      transform: scale(1.2);
+    }
+    .dot.active{
+      background:#fff;
+      transform: scale(1.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    /* ===== Tarjetas de categorías modernas ===== */
+    .cats{
+      max-width:1200px; 
+      margin:30px auto; 
+      padding:0 20px; 
+      display:grid; 
+      grid-template-columns:repeat(3,1fr); 
+      gap:24px;
+    }
+    @media (max-width: 960px){ 
+      .cats{
+        grid-template-columns:1fr;
+        gap: 20px;
+      } 
+    }
+    .cat{
+      position:relative; 
+      height:220px; 
+      border-radius:var(--radius); 
+      overflow:hidden; 
+      box-shadow: var(--shadow);
+      background: var(--card-glass);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cat:hover{
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+    }
+    .cat:hover .img{
+      transform:scale(1.1);
+    }
+    /* Fondos con gradientes modernos */
+    .cat.pronos .img{ 
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
-    .audio-wave {
-      animation: audioWave 2s ease-in-out infinite;
+    .cat.ligas .img{ 
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     }
-    .audio-wave.delay-1 { animation-delay: 0.2s; }
-    .audio-wave.delay-2 { animation-delay: 0.4s; }
-    .audio-wave.delay-3 { animation-delay: 0.6s; }
-    .audio-wave.delay-4 { animation-delay: 0.8s; }
-    @keyframes audioWave {
-      0%, 100% { height: 8px; }
-      50% { height: 24px; }
+    .cat.clasif .img{ 
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    .cat::after{
+      content:""; 
+      position:absolute; 
+      inset:0; 
+      background:linear-gradient(135deg, rgba(0,0,0,.4), rgba(0,0,0,.1) 60%, rgba(0,0,0,.2));
+    }
+    .cat .img{
+      position:absolute; 
+      inset:0; 
+      background-size:cover; 
+      background-position:center; 
+      transition:transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cat .copy{
+      position:relative; 
+      z-index:2; 
+      color:#fff; 
+      display:flex; 
+      flex-direction:column; 
+      height:100%; 
+      justify-content:flex-end; 
+      padding:24px;
+    }
+    .cat h3{
+      margin:0 0 8px; 
+      font-size:24px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .cat p{
+      margin:0 0 16px; 
+      color:rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+    }
+    .cat .btn{
+      align-self:flex-start;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+    }
+    .cat .btn:hover{
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    footer{
+      max-width:1200px; 
+      margin:40px auto; 
+      padding:20px; 
+      color:rgba(255, 255, 255, 0.8); 
+      text-align:center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .hidden{display:none !important}
+
+    /* ===== Modales modernos ===== */
+    .modal{
+      position:fixed; 
+      inset:0; 
+      background:rgba(0,0,0,0.6); 
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      display:none; 
+      align-items:center; 
+      justify-content:center; 
+      padding:20px;
+      z-index: 1000;
+    }
+    .modal.show{
+      display:flex;
+      animation: modalFadeIn 0.3s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-card{
+      width:min(960px,96vw); 
+      background: var(--card);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      border-radius:var(--radius); 
+      border:1px solid rgba(255, 255, 255, 0.2); 
+      box-shadow: var(--shadow-lg); 
+      display:flex; 
+      flex-direction:column; 
+      max-height:90vh;
+      animation: modalSlideIn 0.3s ease-out;
+    }
+    @keyframes modalSlideIn {
+      from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .modal-hd{
+      padding:20px 24px; 
+      border-bottom:1px solid rgba(255, 255, 255, 0.1); 
+      display:flex; 
+      align-items:center; 
+      gap:12px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .modal-hd h2{
+      margin:0; 
+      font-size:20px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .modal-bd{
+      padding:24px; 
+      overflow:auto;
+    }
+    .modal-ft{
+      padding:20px 24px; 
+      border-top:1px solid rgba(255, 255, 255, 0.1); 
+      display:flex; 
+      gap:12px; 
+      align-items:center; 
+      justify-content:flex-end;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .iconbtn{
+      background:rgba(255, 255, 255, 0.1); 
+      border:1px solid rgba(255, 255, 255, 0.2); 
+      border-radius:var(--radius-sm); 
+      padding:10px; 
+      cursor:pointer;
+      color: var(--muted);
+      transition: all 0.3s ease;
+    }
+    .iconbtn:hover{
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--ink);
+      transform: scale(1.1);
+    }
+    .row{display:flex; gap:12px; flex-wrap:wrap}
+    .grow{flex:1}
+    .field{display:grid; gap:8px; margin:12px 0}
+    label{
+      font-weight:600;
+      color: var(--ink);
+      font-size: 14px;
+    }
+    input,select,textarea{
+      width:100%; 
+      padding:12px 16px; 
+      border:1px solid rgba(255, 255, 255, 0.2); 
+      border-radius:var(--radius-sm); 
+      background:rgba(255, 255, 255, 0.1);
+      backdrop-filter: var(--backdrop);
+      -webkit-backdrop-filter: var(--backdrop);
+      color: var(--ink);
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    input:focus,select:focus,textarea:focus{
+      outline:none; 
+      box-shadow:0 0 0 3px rgba(102, 126, 234, 0.2); 
+      border-color: var(--primary-solid);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    input::placeholder, textarea::placeholder {
+      color: var(--muted);
+    }
+    table{
+      width:100%; 
+      border-collapse:separate; 
+      border-spacing:0;
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    th,td{
+      padding:16px 20px; 
+      border-bottom:1px solid rgba(255, 255, 255, 0.1);
+    }
+    th{
+      text-align:left; 
+      color:var(--ink); 
+      font-size:12px; 
+      text-transform:uppercase; 
+      letter-spacing:.04em;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .progress{
+      height:12px; 
+      background:rgba(255, 255, 255, 0.1); 
+      border-radius:999px; 
+      overflow:hidden;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .progress > i{
+      display:block; 
+      height:100%; 
+      width:0%; 
+      background: var(--primary);
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+    .badge{
+      display:inline-flex; 
+      align-items:center; 
+      gap:6px; 
+      padding:6px 12px; 
+      border-radius:999px; 
+      font-weight:700; 
+      font-size:12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .ok{
+      background: var(--success);
+      color:#fff;
+    }
+    .danger{
+      background: var(--accent);
+      color:#fff;
+    }
+    .muted{
+      color:var(--muted);
+    }
+
+    /* ===== Modo Oscuro ===== */
+    [data-theme="dark"] {
+      --dark: #1a1a2e;
+      --ink: #e8eef8;
+      --muted: #a8b2d1;
+      --bg: linear-gradient(135deg, #0f0f23 0%, #16213e 100%);
+      --bg-light: #1a1a2e;
+      --card: rgba(26, 26, 46, 0.8);
+      --card-glass: rgba(26, 26, 46, 0.3);
+    }
+
+    [data-theme="dark"] .topbar {
+      background: rgba(15, 15, 35, 0.9);
+    }
+
+    [data-theme="dark"] .mainnav {
+      background: rgba(26, 26, 46, 0.8);
+    }
+
+    [data-theme="dark"] .modal-card {
+      background: var(--card);
+    }
+
+    [data-theme="dark"] input,
+    [data-theme="dark"] select,
+    [data-theme="dark"] textarea {
+      background: rgba(26, 26, 46, 0.5);
+      color: var(--ink);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="dark"] table {
+      background: var(--card);
+    }
+
+    /* ===== Responsive mejorado ===== */
+    @media (max-width: 768px) {
+      .topbar .inner {
+        padding: 10px 16px;
+        gap: 12px;
+      }
+      
+      .mainnav .inner {
+        padding: 12px 16px;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .menu {
+        gap: 16px;
+        justify-content: center;
+      }
+      
+      .search {
+        margin-left: 0;
+        width: 100%;
+      }
+      
+      .search input {
+        width: 100%;
+      }
+      
+      .hero {
+        padding: 0 16px;
+      }
+      
+      .carousel {
+        border-radius: 16px;
+      }
+      
+      .slide {
+        height: 350px;
+      }
+      
+      .slide .copy {
+        padding: 24px;
+      }
+      
+      .copy h1 {
+        font-size: 28px;
+      }
+      
+      .copy p {
+        font-size: 16px;
+      }
+      
+      .cats {
+        padding: 0 16px;
+        gap: 16px;
+      }
+      
+      .cat {
+        height: 180px;
+      }
+      
+      .cat h3 {
+        font-size: 20px;
+      }
+      
+      .modal {
+        padding: 16px;
+      }
+      
+      .modal-card {
+        border-radius: 16px;
+      }
+      
+      .modal-hd,
+      .modal-bd,
+      .modal-ft {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand .name {
+        font-size: 18px;
+      }
+      
+      .logo {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+      
+      .slide {
+        height: 300px;
+      }
+      
+      .slide .copy {
+        padding: 20px;
+      }
+      
+      .copy h1 {
+        font-size: 24px;
+      }
+      
+      .copy p {
+        font-size: 14px;
+      }
+      
+      .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-white text-gray-800">
-
-  <!-- Hero moderno -->
-  <section class="relative bg-gray-900 text-white">
-    <div class="absolute inset-0">
-      <img src="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=2071&q=80" alt="Reunión de negocios" class="w-full h-full object-cover opacity-30" />
-    </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6 py-32 text-center">
-      <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Convierte audios de reuniones en mapas mentales con IA</h1>
-      <p class="text-xl max-w-2xl mx-auto mb-8 text-gray-200">Con <strong>MindSketch</strong>, transforma automáticamente grabaciones de reuniones, clases y conferencias en resúmenes visuales y mapas mentales estructurados.</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="#contacto" class="inline-block bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold px-6 py-3 rounded-full transition shadow-md">🎧 Probar con mi audio</a>
-        <a href="#como-funciona" class="inline-block border-2 border-white hover:bg-white hover:text-gray-900 text-white text-lg font-semibold px-6 py-3 rounded-full transition">Ver cómo funciona</a>
+<body>
+  <!-- Barra superior (oscura) -->
+  <div class="topbar">
+    <div class="inner">
+      <a href="#" class="brand"><div class="logo">SL</div><div class="name">SuperLiga</div></a>
+      <div class="top-info">
+        <span>📞 +34 600 000 000</span>
+        <button id="themeToggle" style="background:none;border:0;color:#fff;font:inherit;cursor:pointer;padding:8px;border-radius:8px;transition:all 0.3s ease" title="Cambiar tema">🌙</button>
+        <span id="miniAuth"><button type="button" data-open="auth" style="background:none;border:0;color:#fff;font:inherit;cursor:pointer;padding:8px 16px;border-radius:8px;transition:all 0.3s ease">Entrar</button></span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Ejemplo de Resultado -->
-  <section class="py-20 px-6 md:px-16 bg-gradient-to-br from-blue-50 to-indigo-100">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">De audio a insights visuales en minutos</h2>
-      <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">Desde reuniones de equipo hasta conferencias académicas - MindSketch extrae lo esencial y lo convierte en mapas mentales claros.</p>
-      
-      <!-- Antes y Después -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-        <!-- Audio Original -->
-        <div class="bg-white rounded-2xl shadow-xl p-8">
-          <div class="flex items-center justify-center mb-6">
-            <div class="bg-red-500 w-4 h-4 rounded-full animate-pulse mr-3"></div>
-            <span class="text-lg font-semibold text-gray-700">Audio de reunión - 45 min</span>
-          </div>
-          
-          <!-- Simulación de onda de audio -->
-          <div class="flex items-end justify-center space-x-1 mb-6 h-16">
-            <div class="audio-wave bg-blue-400 w-2 rounded-full"></div>
-            <div class="audio-wave delay-1 bg-blue-500 w-2 rounded-full"></div>
-            <div class="audio-wave delay-2 bg-blue-400 w-2 rounded-full"></div>
-            <div class="audio-wave delay-3 bg-blue-600 w-2 rounded-full"></div>
-            <div class="audio-wave delay-4 bg-blue-400 w-2 rounded-full"></div>
-            <div class="audio-wave bg-blue-500 w-2 rounded-full"></div>
-            <div class="audio-wave delay-1 bg-blue-400 w-2 rounded-full"></div>
-            <div class="audio-wave delay-2 bg-blue-600 w-2 rounded-full"></div>
-            <div class="audio-wave delay-3 bg-blue-400 w-2 rounded-full"></div>
-            <div class="audio-wave delay-4 bg-blue-500 w-2 rounded-full"></div>
-          </div>
-          
-          <div class="text-left space-y-3 text-sm text-gray-600">
-            <p class="italic">"Necesitamos revisar el presupuesto del Q2..."</p>
-            <p class="italic">"Los indicadores muestran un crecimiento..."</p>
-            <p class="italic">"¿Qué opinas sobre la estrategia de marketing?"</p>
-            <p class="text-center text-gray-400">+ 42 minutos más...</p>
-          </div>
+  <!-- Menú principal con buscador -->
+  <div class="mainnav">
+    <div class="inner">
+      <nav class="menu" id="menu">
+        <a href="#" aria-current="page">Inicio</a>
+        <div class="sep"></div>
+        <a href="#" data-open="ligas">Porra</a>
+        <div class="sep"></div>
+        <a href="#" data-open="pronos">Mis pronósticos</a>
+        <div class="sep"></div>
+        <a href="#" data-open="clasif">Clasificación</a>
+        <div class="sep"></div>
+        <a href="#" data-open="admin" id="linkAdmin" class="hidden">Admin</a>
+      </nav>
+      <div class="search">
+        <input id="q" placeholder="Buscar equipos, ligas..." />
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero: carrusel -->
+  <section class="hero">
+    <div class="carousel" id="carousel">
+      <div class="slide active" data-idx="0">
+        <div class="img" style="background-image:url('https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?q=80&w=1400&auto=format&fit=crop');"></div>
+        <div class="copy">
+          <h1>Juega la porra oficial de LaLiga 2025–2026</h1>
+          <p>Pronostica todos los partidos, compite en tus ligas y escala en la clasificación.</p>
+          <button class="btn primary" data-open="pronos">Empezar ahora</button>
+          <button class="btn white" data-open="ligas">Crear o unirme a una liga</button>
         </div>
-        
-        <!-- Resultado: Mapa Mental -->
-        <div class="bg-white rounded-2xl shadow-xl p-8">
-          <h3 class="text-xl font-bold mb-6 text-gray-800">📊 Mapa Mental Generado</h3>
-          <div class="relative">
-            <!-- Nodo Central -->
-            <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div class="mind-map-node bg-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                REUNIÓN Q2
-              </div>
-            </div>
-            
-            <!-- Nodos Secundarios -->
-            <div class="relative h-64">
-              <div class="absolute top-2 left-4">
-                <div class="mind-map-node bg-green-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
-                  <div class="font-semibold">Presupuesto</div>
-                  <div class="text-xs mt-1">Revisión Q2</div>
-                </div>
-              </div>
-              
-              <div class="absolute top-2 right-4">
-                <div class="mind-map-node bg-blue-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
-                  <div class="font-semibold">KPIs</div>
-                  <div class="text-xs mt-1">Crecimiento +15%</div>
-                </div>
-              </div>
-              
-              <div class="absolute bottom-2 left-8">
-                <div class="mind-map-node bg-orange-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
-                  <div class="font-semibold">Marketing</div>
-                  <div class="text-xs mt-1">Nueva estrategia</div>
-                </div>
-              </div>
-              
-              <div class="absolute bottom-2 right-8">
-                <div class="mind-map-node bg-red-400 text-white px-3 py-2 rounded-lg shadow-md text-xs">
-                  <div class="font-semibold">Acciones</div>
-                  <div class="text-xs mt-1">3 tareas</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Resumen adicional -->
-          <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-            <h4 class="font-semibold text-sm mb-2">📝 Resumen ejecutivo:</h4>
-            <ul class="text-xs text-gray-600 space-y-1">
-              <li>• Presupuesto Q2 necesita ajustes del 12%</li>
-              <li>• KPIs muestran crecimiento del 15%</li>
-              <li>• Nueva estrategia de marketing aprobada</li>
-              <li>• 3 action items asignados</li>
-            </ul>
-          </div>
+        <div class="dots"></div>
+      </div>
+      <div class="slide" data-idx="1">
+        <div class="img" style="background-image:url('https://images.unsplash.com/photo-1471295253337-3ceaaedca402?q=80&w=1400&auto=format&fit=crop');"></div>
+        <div class="copy">
+          <h1>Tu progreso, siempre a la vista</h1>
+          <p>Completa tus pronósticos por jornada hasta alcanzar el 100 %.</p>
+          <button class="btn primary" data-open="pronos">Ver mis pronósticos</button>
         </div>
       </div>
-      
-      <!-- Formatos soportados -->
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <h3 class="text-xl font-bold mb-6 text-gray-800">Formatos soportados</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div class="text-center">
-            <div class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <span class="text-2xl">🎵</span>
-            </div>
-            <div class="font-semibold text-sm">MP3</div>
-            <div class="text-xs text-gray-500">Hasta 2 horas</div>
-          </div>
-          <div class="text-center">
-            <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <span class="text-2xl">🎤</span>
-            </div>
-            <div class="font-semibold text-sm">WAV</div>
-            <div class="text-xs text-gray-500">Alta calidad</div>
-          </div>
-          <div class="text-center">
-            <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <span class="text-2xl">📄</span>
-            </div>
-            <div class="font-semibold text-sm">PDF</div>
-            <div class="text-xs text-gray-500">Documentos</div>
-          </div>
-          <div class="text-center">
-            <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <span class="text-2xl">📝</span>
-            </div>
-            <div class="font-semibold text-sm">DOCX</div>
-            <div class="text-xs text-gray-500">Word docs</div>
-          </div>
+      <div class="slide" data-idx="2">
+        <div class="img" style="background-image:url('https://images.unsplash.com/photo-1542574271-7f3b92e6c821?q=80&w=1400&auto=format&fit=crop');"></div>
+        <div class="copy">
+          <h1>Clasificaciones en tiempo real</h1>
+          <p>Individuales y por ligas. ¡Que gane el mejor!</p>
+          <button class="btn primary" data-open="clasif">Ver clasificación</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Cómo funciona -->
-  <section id="como-funciona" class="py-20 px-6 md:px-16 bg-white">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">¿Cómo funciona MindSketch?</h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Desde tu grabación hasta mapas mentales profesionales en 3 pasos automatizados.</p>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <!-- Paso 1 -->
-        <div class="step-animation text-center">
-          <div class="bg-blue-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg">
-            1
-          </div>
-          <div class="bg-gray-50 rounded-xl p-6 mb-6">
-            <div class="bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-              <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span class="text-white text-lg">🎙️</span>
-              </div>
-              <p class="text-sm text-gray-600">Sube tu audio MP3/WAV</p>
-              <p class="text-xs text-gray-400 mt-1">O arrastra tu PDF/DOCX</p>
-            </div>
-          </div>
-          <h3 class="text-xl font-semibold mb-3">Sube tu contenido</h3>
-          <p class="text-gray-600">Carga grabaciones de reuniones, clases, conferencias, o documentos. Soportamos archivos de hasta 2 horas de duración.</p>
-        </div>
-        
-        <!-- Paso 2 -->
-        <div class="step-animation delay-1 text-center">
-          <div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg">
-            2
-          </div>
-          <div class="bg-gray-50 rounded-xl p-6 mb-6">
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-6 text-white text-center">
-              <div class="flex flex-col items-center mb-2">
-                <div class="flex space-x-1 mb-2">
-                  <div class="w-2 h-6 bg-white opacity-80 rounded-full animate-pulse"></div>
-                  <div class="w-2 h-4 bg-white opacity-60 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-                  <div class="w-2 h-8 bg-white opacity-90 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-                  <div class="w-2 h-5 bg-white opacity-70 rounded-full animate-pulse" style="animation-delay: 0.6s"></div>
-                </div>
-                <span class="text-sm">IA transcribiendo y analizando...</span>
-              </div>
-              <div class="text-xs opacity-80">Extrayendo conceptos clave</div>
-            </div>
-          </div>
-          <h3 class="text-xl font-semibold mb-3">IA procesa el contenido</h3>
-          <p class="text-gray-600">Nuestra IA transcribe el audio, identifica temas principales, speakers, y estructura la información automáticamente.</p>
-        </div>
-        
-        <!-- Paso 3 -->
-        <div class="step-animation delay-2 text-center">
-          <div class="bg-purple-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg">
-            3
-          </div>
-          <div class="bg-gray-50 rounded-xl p-6 mb-6">
-            <div class="bg-white rounded-lg p-4 border">
-              <div class="text-center mb-3">
-                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold mx-auto mb-2">📊</div>
-                <div class="text-xs text-gray-600">Mapa mental + resumen</div>
-              </div>
-              <div class="flex justify-center space-x-2">
-                <div class="w-6 h-6 bg-blue-400 rounded-full"></div>
-                <div class="w-1 h-px bg-gray-300 mt-3"></div>
-                <div class="w-6 h-6 bg-green-400 rounded-full"></div>
-                <div class="w-1 h-px bg-gray-300 mt-3"></div>
-                <div class="w-6 h-6 bg-orange-400 rounded-full"></div>
-              </div>
-            </div>
-          </div>
-          <h3 class="text-xl font-semibold mb-3">Recibe tus insights</h3>
-          <p class="text-gray-600">Obtén mapas mentales interactivos, resúmenes ejecutivos, y action items listos para compartir o descargar.</p>
-        </div>
-      </div>
-      
-      <div class="text-center mt-12">
-        <div class="bg-blue-50 rounded-2xl p-8 inline-block">
-          <p class="text-lg font-semibold text-blue-900 mb-2">⚡ Proceso completo en 2-5 minutos</p>
-          <p class="text-blue-700">Dependiendo de la duración de tu audio</p>
-        </div>
-      </div>
-    </div>
+  <!-- Tarjetas tipo “categorías” -->
+  <section class="cats">
+    <a class="cat pronos" data-open="pronos">
+      <div class="img"></div>
+      <div class="copy"><h3>Mis pronósticos</h3><p>Completa la jornada activa</p><span class="btn white">Entrar</span></div>
+    </a>
+    <a class="cat ligas" data-open="ligas">
+      <div class="img"></div>
+      <div class="copy"><h3>Ligas</h3><p>Crea o únete por código</p><span class="btn white">Entrar</span></div>
+    </a>
+    <a class="cat clasif" data-open="clasif">
+      <div class="img"></div>
+      <div class="copy"><h3>Clasificación</h3><p>Global y por ligas</p><span class="btn white">Entrar</span></div>
+    </a>
   </section>
 
-  <!-- Casos de uso -->
-  <section class="py-20 px-6 md:px-16 bg-gray-50">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-12 text-gray-900">¿Para qué puedes usar MindSketch?</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="text-left bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition">
-          <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-            <span class="text-2xl">👥</span>
-          </div>
-          <h3 class="text-xl font-semibold mb-3">Reuniones de trabajo</h3>
-          <p class="text-gray-600 mb-4">Convierte largas reuniones en resúmenes visuales con action items claros. Nunca más pierdas detalles importantes.</p>
-          <div class="text-sm text-blue-600">
-            ✓ Actas automáticas ✓ Action items ✓ Participantes identificados
-          </div>
-        </div>
-        
-        <div class="text-left bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition">
-          <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-            <span class="text-2xl">🎓</span>
-          </div>
-          <h3 class="text-xl font-semibold mb-3">Clases y conferencias</h3>
-          <p class="text-gray-600 mb-4">Transforma conferencias educativas en mapas de conocimiento que tus estudiantes puedan revisar fácilmente.</p>
-          <div class="text-sm text-green-600">
-            ✓ Conceptos clave ✓ Estructura visual ✓ Material de repaso
-          </div>
-        </div>
-        
-        <div class="text-left bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition">
-          <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-            <span class="text-2xl">🎤</span>
-          </div>
-          <h3 class="text-xl font-semibold mb-3">Entrevistas y podcasts</h3>
-          <p class="text-gray-600 mb-4">Extrae insights valiosos de entrevistas largas y conviértelos en contenido visual para redes sociales.</p>
-          <div class="text-sm text-purple-600">
-            ✓ Quotes destacados ✓ Temas principales ✓ Content marketing
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Feedback -->
-  <section id="contacto" class="py-20 px-6 md:px-20 bg-white">
-    <div class="max-w-xl mx-auto bg-white p-10 rounded-2xl shadow-2xl border">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-4 text-gray-900">¿Qué piensas de MindSketch?</h2>
-        <p class="text-gray-600">Tu opinión es fundamental para mejorar esta solución. Comparte tu feedback y ayúdanos a crear la herramienta perfecta.</p>
-        <div class="flex justify-center space-x-1 mt-4">
-          <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-          <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-          <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
-          <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
-          <div class="w-2 h-2 bg-pink-400 rounded-full"></div>
-        </div>
-      </div>
-      
-      <form action="https://formsubmit.co/luis.ilunga@protonmail.com" method="POST" class="space-y-6">
-        <input type="hidden" name="_next" value="https://ghosan.github.io/MindSketch/gracias.html">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="Nuevo feedback sobre MindSketch">
-        <div>
-          <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
-          <input type="text" name="nombre" id="nombre" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
-        </div>
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo electrónico</label>
-          <input type="email" name="email" id="email" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
-        </div>
-        <div>
-          <label for="uso" class="block text-sm font-medium text-gray-700 mb-2">¿Para qué usarías MindSketch?</label>
-          <select name="uso" id="uso" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
-            <option value="">Selecciona una opción</option>
-            <option value="reuniones">Reuniones de trabajo</option>
-            <option value="clases">Clases y educación</option>
-            <option value="entrevistas">Entrevistas/Podcasts</option>
-            <option value="conferencias">Conferencias</option>
-            <option value="otro">Otro</option>
-          </select>
-        </div>
-        <div>
-          <label for="feedback" class="block text-sm font-medium text-gray-700 mb-2">Tu feedback sobre la solución</label>
-          <textarea name="feedback" id="feedback" rows="4" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="¿Qué te parece la idea? ¿La usarías? ¿Qué mejorarías? ¿Pagarías por ella? Cuéntanos todo..."></textarea>
-        </div>
-        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 rounded-xl font-semibold transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-          💭 Enviar mi feedback
-        </button>
-      </form>
-      
-      <div class="mt-6 text-center text-sm text-gray-500">
-        <p>✅ Tu opinión importa • ✅ Respuesta personalizada • ✅ Ayúdanos a mejorar</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white text-center py-12">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="mb-8">
-        <h3 class="text-2xl font-bold mb-2">MindSketch</h3>
-        <p class="text-gray-400">De audio a insights visuales con IA</p>
-      </div>
-      <div class="border-t border-gray-800 pt-8">
-        <p class="text-gray-400">© 2025 <strong>MindSketch</strong> · Todos los derechos reservados</p>
-      </div>
+  <footer>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+      <div style="font-size: 18px; font-weight: 700; color: #fff;">⚽ SuperLiga</div>
+      <div style="font-size: 14px; opacity: 0.8;">La porra más moderna de LaLiga 2025–2026</div>
+      <div style="font-size: 12px; opacity: 0.6;">© 2025 · Desarrollado con ❤️ · Supabase + Vercel</div>
     </div>
   </footer>
 
+  <!-- ========= Modales ========= -->
+  <div class="modal" id="mod-auth" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <div class="modal-hd"><h2 id="authTitle">Acceso</h2><div class="grow"></div><button class="iconbtn" data-close>✕</button></div>
+      <div class="modal-bd">
+        <div class="row">
+          <div class="field grow"><label>Email</label><input id="authEmail" type="email" placeholder="tu@correo.com"></div>
+          <div class="field grow"><label>Contraseña</label><input id="authPass" type="password" placeholder="Mín. 6 caracteres"></div>
+        </div>
+        <div class="row">
+          <button class="btn primary" id="btnDoLogin">Entrar</button>
+          <button class="btn" id="btnDoSignup">Crear cuenta</button>
+        </div>
+        <p class="muted">Tras crear la cuenta, verifica el correo si te lo piden y vuelve a iniciar sesión.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="mod-ligas" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-hd"><h2>Porra — Ligas</h2><div class="grow"></div><button class="iconbtn" data-close>✕</button></div>
+      <div class="modal-bd">
+        <div class="row">
+          <div class="field grow"><label>Nombre de la liga</label><input id="ligaNombre" placeholder="Ej. Oficina Norte"></div>
+          <div class="field grow"><label>Descripción</label><input id="ligaDesc" placeholder="Grupo de amigos, empresa, familia..."></div>
+          <div class="field"><label>&nbsp;</label><button class="btn primary" id="btnCrearLiga">Crear liga</button></div>
+        </div>
+        <div class="row">
+          <div class="field grow"><label>Código de invitación</label><input id="ligaCodigo" placeholder="Pega el código"></div>
+          <div class="field"><label>&nbsp;</label><button class="btn" id="btnUnirseLiga">Unirme</button></div>
+        </div>
+        <h3 class="muted" style="margin:10px 0 0">Mis ligas</h3>
+        <div id="misLigas" style="margin-top:6px"></div>
+      </div>
+      <div class="modal-ft"><button class="btn" data-close>Cerrar</button></div>
+    </div>
+  </div>
+
+  <div class="modal" id="mod-pronos" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-hd"><h2>Mis pronósticos</h2><div class="grow"></div><button class="iconbtn" data-close>✕</button></div>
+      <div class="modal-bd">
+        <div class="row"><select id="selLiga" class="grow"></select><select id="selJornada" style="max-width:220px"></select></div>
+        <div class="progress" style="margin:10px 0 6px"><i id="barPct"></i></div>
+        <div class="row" style="justify-content:space-between"><span class="muted">Completado</span><strong id="txtPct">0%</strong></div>
+        <div id="listPartidos" style="margin-top:8px"></div>
+      </div>
+      <div class="modal-ft"><span class="muted" id="msgSave"></span><button class="btn primary" id="btnGuardar">Guardar pronósticos</button></div>
+    </div>
+  </div>
+
+  <div class="modal" id="mod-clasif" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-hd"><h2>Clasificación</h2><div class="grow"></div><button class="iconbtn" data-close>✕</button></div>
+      <div class="modal-bd">
+        <div class="row"><select id="selLigaC" class="grow"></select><select id="selJornadaC" style="max-width:220px"></select></div>
+        <div id="tablaClasif" style="margin-top:10px"></div>
+        <h3 class="muted" style="margin-top:16px">Clasificación por ligas</h3>
+        <div id="tablaLigas"></div>
+      </div>
+      <div class="modal-ft"><button class="btn" data-close>Cerrar</button></div>
+    </div>
+  </div>
+
+  <div class="modal" id="mod-admin" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-hd"><h2>Admin</h2><div class="grow"></div><button class="iconbtn" data-close>✕</button></div>
+      <div class="modal-bd">
+        <div class="row" style="margin-bottom:8px"><button class="btn" id="tabA1">Resultados oficiales</button><button class="btn" id="tabA2">Gestión de jornadas</button></div>
+        <div id="panelRes">
+          <div class="row"><select id="selJornadaA" class="grow"></select><button class="btn" id="btnRefrescarA">Refrescar</button></div>
+          <div id="listPartidosA" style="margin-top:10px"></div>
+          <div class="row" style="justify-content:flex-end; margin-top:8px"><span class="muted" id="msgAdmin"></span><button class="btn" id="btnGuardarResultados">Guardar resultados</button><button class="btn primary" id="btnCalcular">Calcular puntuaciones</button></div>
+        </div>
+        <div id="panelJor" style="display:none">
+          <div class="row"><input id="jName" placeholder="Nombre jornada (ej. J1)" class="grow"/><button class="btn" id="btnCrearJornada">Crear jornada</button></div>
+          <div class="muted">Importador rápido: <em>Equipo Local – Equipo Visitante; YYYY-MM-DD HH:MM</em></div>
+          <textarea id="bulkPartidos" rows="6" style="width:100%; margin-top:6px" placeholder="Ejemplo\nReal Madrid – Betis; 2025-08-24 21:00\nGirona – Rayo Vallecano; 2025-08-24 19:30"></textarea>
+          <div class="row" style="margin-top:8px"><select id="selJornadaTarget" class="grow"></select><button class="btn primary" id="btnImportarPartidos">Importar partidos</button></div>
+        </div>
+      </div>
+      <div class="modal-ft"><button class="btn" data-close>Cerrar</button></div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Configuración Supabase =====
+    // ⚠️ Sustituye estos valores por los de tu proyecto en https://app.supabase.com
+    const SUPABASE_URL = "https://vnodkyghzccgltgjfygw.supabase.co"; // ← cambia
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZub2RreWdoemNjZ2x0Z2pmeWd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwOTA0OTAsImV4cCI6MjA3MjY2NjQ5MH0._Jepfn500OBWsrtdn6c59hcr_mhDaKZKcWyrtp_uP9U"; // ← cambia
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ===== Utilidades =====
+    const qs = sel => document.querySelector(sel);
+    const qsa = sel => Array.from(document.querySelectorAll(sel));
+    const fmtDate = s => new Date(s).toLocaleString('es-ES', { dateStyle:'medium', timeStyle:'short' });
+    const outcome1X2 = (hg, ag) => hg>ag ? '1' : (hg<ag ? '2' : 'X');
+    function puntosPartido(predHG, predAG, realHG, realAG){
+      let p=0; if([predHG,predAG,realHG,realAG].every(Number.isFinite)){
+        if(outcome1X2(predHG,predAG)===outcome1X2(realHG,realAG)) p+=48;
+        if(predHG===realHG) p+=15; if(predAG===realAG) p+=15; if((predHG-predAG)===(realHG-realAG)) p+=12; }
+      return p;
+    }
+    function toast(node, msg){ node.textContent = msg; setTimeout(()=>node.textContent='', 2800); }
+
+    // ===== Carrusel ligero =====
+    const slides = qsa('.carousel .slide');
+    const dotsWrap = slides[0].querySelector('.dots');
+    function buildDots(){
+      slides.forEach((s,i)=>{
+        const d = document.createElement('div'); d.className='dot'+(i===0?' active':''); d.dataset.idx=i; dotsWrap.appendChild(d);
+      });
+    }
+    function activate(idx){ slides.forEach((s,i)=> s.classList.toggle('active', i===idx)); qsa('.dot').forEach((d,i)=> d.classList.toggle('active', i===idx)); cur=idx; }
+    let cur = 0; let t; function next(){ activate((cur+1)%slides.length); } function autoplay(){ clearInterval(t); t = setInterval(next, 5000); }
+    document.addEventListener('click', (e)=>{ const d = e.target.closest('.dot'); if(d){ activate(Number(d.dataset.idx)); autoplay(); }});
+    buildDots(); autoplay();
+
+    // ===== Modales =====
+    function openModal(id){ const el = qs(`#mod-${id}`); if(!el) return; el.classList.add('show'); el.setAttribute('aria-hidden','false');
+      if(id==='ligas') cargarLigas();
+      if(id==='pronos'){ cargarJornadas('#selJornada'); if(qs('#selJornada').value) listarPartidos(Number(qs('#selJornada').value), '#listPartidos'); }
+      if(id==='clasif'){ cargarJornadas('#selJornadaC'); renderClasificacion(); }
+      if(id==='admin'){ cargarJornadas('#selJornadaA'); cargarJornadas('#selJornadaTarget'); if(qs('#selJornadaA').value) listarPartidos(Number(qs('#selJornadaA').value),'#listPartidosA','admin'); }
+    }
+    function closeModal(el){ el.classList.remove('show'); el.setAttribute('aria-hidden','true'); }
+
+    // 🔒 Manejador de clics robusto (siempre abre Auth y evita href="#")
+    document.addEventListener('click', (e)=>{
+      const openBtn = e.target.closest('[data-open]');
+      if(openBtn){
+        e.preventDefault(); // evita navegar a '#'
+        const id = openBtn.dataset.open;
+        if(id==='auth'){ openModal('auth'); return; }
+        if(id==='admin'){
+          ensureAdmin()
+            .then(a=>{ if(a) openModal('admin'); else alert('Se requiere rol administrador.'); })
+            .catch(()=> alert('Error de conexión con Supabase. Revisa SUPABASE_URL y SUPABASE_ANON_KEY.'));
+          return;
+        }
+        ensureAuth()
+          .then(ok=>{ if(ok) openModal(id); else openModal('auth'); })
+          .catch(()=> openModal('auth'));
+      }
+      if(e.target.matches('[data-close]')){ e.preventDefault(); closeModal(e.target.closest('.modal')); }
+      if(e.target.classList.contains('modal')) closeModal(e.target);
+    });
+
+    // ===== Tabs Admin =====
+    qs('#tabA1')?.addEventListener('click',()=>{ qs('#panelRes').style.display='block'; qs('#panelJor').style.display='none'; });
+    qs('#tabA2')?.addEventListener('click',()=>{ qs('#panelRes').style.display='none'; qs('#panelJor').style.display='block'; });
+
+    // ===== Auth (robusto) =====
+    async function ensureAuth(){
+      try{ const { data:{ user }, error } = await supabase.auth.getUser(); if(error) console.warn('getUser error', error); return !!user; }
+      catch(e){ console.warn('ensureAuth fallo', e); return false; }
+    }
+    async function ensureAdmin(){
+      try{ const { data:{ user } } = await supabase.auth.getUser(); if(!user) return false; const { data, error } = await supabase.from('profiles').select('is_admin').eq('id', user.id).limit(1); if(error){ console.warn('profiles error', error); return false; } return !!(data && data[0] && data[0].is_admin); }
+      catch(e){ console.warn('ensureAdmin fallo', e); return false; }
+    }
+    async function renderAuth(){
+      const { data:{ user } } = await supabase.auth.getUser();
+      if(!user){ qs('#miniAuth').innerHTML = '<button type="button" data-open="auth" style="background:none;border:0;color:#fff;font:inherit;cursor:pointer">Entrar</button>'; qs('#linkAdmin').classList.add('hidden'); }
+      else{
+        const { data } = await supabase.from('profiles').select('display_name,is_admin').eq('id', user.id).limit(1);
+        const isA = !!(data && data[0] && data[0].is_admin);
+        qs('#miniAuth').innerHTML = `<span>${(data && data[0]?.display_name)||user.email}</span> · <a href="#" id="btnLogout" style="color:#fff">Salir</a>`;
+        qs('#btnLogout')?.addEventListener('click', async(e)=>{ e.preventDefault(); await supabase.auth.signOut(); location.reload(); });
+        qs('#linkAdmin').classList.toggle('hidden', !isA);
+      }
+    }
+    renderAuth();
+
+    // Botones de acceso
+    qs('#btnDoLogin')?.addEventListener('click', async()=>{
+      const email = qs('#authEmail').value.trim(); const password = qs('#authPass').value.trim();
+      if(!email||!password) return alert('Completa email y contraseña');
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if(error) return alert(error.message);
+      closeModal(qs('#mod-auth')); renderAuth();
+    });
+    qs('#btnDoSignup')?.addEventListener('click', async()=>{
+      const email = qs('#authEmail').value.trim(); const password = qs('#authPass').value.trim();
+      if(!email||!password) return alert('Completa email y contraseña');
+      const { error } = await supabase.auth.signUp({ email, password });
+      if(error) return alert(error.message);
+      alert('Cuenta creada. Revisa tu correo si te lo piden y vuelve a iniciar sesión.');
+    });
+
+    // ===== Ligas =====
+    async function cargarLigas(){
+      const { data:{ user } } = await supabase.auth.getUser();
+      const wrap = qs('#misLigas');
+      if(!user){ wrap.innerHTML = '<p class="muted">Inicia sesión para ver y crear ligas.</p>'; return; }
+      const { data: ligas } = await supabase.rpc('mis_ligas');
+      if(!ligas||ligas.length===0){ wrap.innerHTML = '<p class="muted">Aún no participas en ninguna liga.</p>'; }
+      else { wrap.innerHTML = ligas.map(l=> `<div style="border:1px dashed #e6eef7; border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px"><div><strong>${l.name}</strong><br><span class="muted">${l.description||''}</span></div><div class="row"><span class="btn white">Código: ${l.join_code}</span><a class="btn" href="https://wa.me/?text=Únete%20a%20mi%20liga%20en%20SuperLiga:%20${encodeURIComponent(l.join_code)}" target="_blank">Invitar</a></div></div>`).join(''); }
+      const opts = (ligas||[]).map(l=>`<option value="${l.id}">${l.name}</option>`).join('');
+      qs('#selLiga').innerHTML = opts; qs('#selLigaC').innerHTML = opts;
+    }
+    async function crearLiga(){
+      const name = qs('#ligaNombre').value.trim(); if(!name) return alert('Pon un nombre para la liga');
+      const description = qs('#ligaDesc').value.trim();
+      const { data, error } = await supabase.rpc('crear_liga', { p_name:name, p_description:description });
+      if(error){ alert(error.message); return; }
+      alert(`Liga creada. Código: ${data.join_code}`);
+      cargarLigas();
+    }
+    async function unirseLiga(){
+      const code = qs('#ligaCodigo').value.trim(); if(!code) return alert('Introduce el código de la liga');
+      const { error } = await supabase.rpc('unirse_liga', { p_join_code: code });
+      if(error){ alert(error.message); return; }
+      cargarLigas();
+    }
+    qs('#btnCrearLiga')?.addEventListener('click', crearLiga);
+    qs('#btnUnirseLiga')?.addEventListener('click', unirseLiga);
+
+    // ===== Jornadas y partidos =====
+    async function cargarJornadas(selectId){
+      const sel = qs(selectId);
+      const { data: jornadas } = await supabase.from('matchdays').select('id,name').order('id');
+      sel.innerHTML = (jornadas||[]).map(j=>`<option value="${j.id}">${j.name}</option>`).join('');
+    }
+    async function listarPartidos(jornadaId, dest, modo){
+      if(!jornadaId){ qs(dest).innerHTML='<p class="muted">Selecciona jornada.</p>'; return; }
+      const { data: partidos } = await supabase.from('matches').select('*').eq('matchday_id', jornadaId).order('kickoff_at');
+      const now = new Date();
+      const { data:{ user } } = await supabase.auth.getUser();
+      let preds=[]; if(user){ const { data } = await supabase.from('predictions').select('*').eq('matchday_id', jornadaId).eq('user_id', user.id); preds = data || []; }
+      const byMatch = Object.fromEntries(preds.map(p=>[p.match_id,p]));
+      const el = qs(dest);
+      if(!partidos||partidos.length===0){ el.innerHTML = '<p class="muted">No hay partidos en esta jornada.</p>'; return; }
+
+      if(modo==='admin'){
+        el.innerHTML = partidos.map(m=>{
+          const hg = m.final_home_goals ?? ''; const ag = m.final_away_goals ?? '';
+          return `<div style="border:1px solid #eef3fb;border-radius:12px;padding:10px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div><strong>${m.home_team}</strong> – <strong>${m.away_team}</strong><br><span class="muted">${fmtDate(m.kickoff_at)}</span></div><div class="row"><input data-a="rhg" data-id="${m.id}" value="${hg}" style="width:64px" /><span>–</span><input data-a="rag" data-id="${m.id}" value="${ag}" style="width:64px" /></div></div>`;
+        }).join('');
+        return;
+      }
+
+      el.innerHTML = partidos.map(m=>{
+        const kickoff = new Date(m.kickoff_at);
+        const locked = now >= kickoff;
+        const p = byMatch[m.id]||{}; const hg = p.home_goals ?? ''; const ag = p.away_goals ?? '';
+        const badge = locked ? '<span class="badge danger">Cerrado</span>' : '<span class="badge ok">Abierto</span>';
+        return `<div style="border:1px solid #eef3fb;border-radius:12px;padding:10px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div><strong>${m.home_team}</strong> – <strong>${m.away_team}</strong><br><span class="muted">${fmtDate(m.kickoff_at)}</span></div><div class="row"><input data-a="phg" data-id="${m.id}" value="${hg}" style="width:64px" ${locked?'disabled':''} /><span>–</span><input data-a="pag" data-id="${m.id}" value="${ag}" style="width:64px" ${locked?'disabled':''} />${badge}</div></div>`;
+      }).join('');
+      actualizarPct(partidos, byMatch);
+    }
+    function actualizarPct(partidos, byMatch){
+      const total = partidos.length;
+      const filled = partidos.filter(p=>{ const pr = byMatch[p.id]; return pr && pr.home_goals!==null && pr.away_goals!==null; }).length;
+      const pct = Math.round((filled/Math.max(1,total))*100);
+      qs('#txtPct').textContent = pct + '%';
+      qs('#barPct').style.width = pct + '%';
+    }
+    async function guardarPronosticos(){
+      const { data:{ user } } = await supabase.auth.getUser(); if(!user){ openModal('auth'); return; }
+      const jornadaId = Number(qs('#selJornada').value);
+      const inputs = qsa('input[data-a="phg"], input[data-a="pag"]');
+      const byId = {};
+      inputs.forEach(i=>{ const id = Number(i.dataset.id); const key = i.dataset.a==='phg'?'home_goals':'away_goals'; byId[id] = byId[id]||{ match_id:id, matchday_id:jornadaId }; const v = i.value===''?null:Number(i.value); byId[id][key] = isNaN(v)?null:v; });
+      const rows = Object.values(byId).filter(r=> r.home_goals!==null && r.away_goals!==null);
+      if(rows.length===0){ toast(qs('#msgSave'),'No has rellenado ningún partido.'); return; }
+      for(const r of rows){ await supabase.from('predictions').upsert({ user_id:user.id, match_id:r.match_id, matchday_id:r.matchday_id, home_goals:r.home_goals, away_goals:r.away_goals }, { onConflict:'user_id,match_id' }); }
+      toast(qs('#msgSave'),'Pronósticos guardados.');
+      await listarPartidos(jornadaId,'#listPartidos');
+    }
+    qs('#btnGuardar')?.addEventListener('click', guardarPronosticos);
+
+    // ===== Admin =====
+    async function guardarResultados(){
+      const jornadaId = Number(qs('#selJornadaA').value);
+      const rhg = qsa('input[data-a="rhg"]');
+      const rag = qsa('input[data-a="rag"]');
+      const byId = {};
+      [...rhg,...rag].forEach(i=>{ const id = Number(i.dataset.id); const key = i.dataset.a==='rhg' ? 'final_home_goals' : 'final_away_goals'; const v = i.value===''?null:Number(i.value); byId[id] = byId[id]||{ id }; byId[id][key] = isNaN(v)?null:v; });
+      const rows = Object.values(byId).filter(r=> r.final_home_goals!==null && r.final_away_goals!==null);
+      for(const r of rows){ await supabase.from('matches').update({ final_home_goals:r.final_home_goals, final_away_goals:r.final_away_goals }).eq('id', r.id); }
+      toast(qs('#msgAdmin'),'Resultados guardados.');
+      await listarPartidos(jornadaId,'#listPartidosA','admin');
+    }
+    async function calcularPuntuaciones(){
+      const jornadaId = Number(qs('#selJornadaA').value);
+      const { data: preds } = await supabase.from('predictions').select('*').eq('matchday_id', jornadaId);
+      const { data: partidos } = await supabase.from('matches').select('id, final_home_goals, final_away_goals').eq('matchday_id', jornadaId);
+      const byMatch = Object.fromEntries((partidos||[]).map(m=>[m.id,m]));
+      const puntos = {};
+      for(const p of (preds||[])){
+        const m = byMatch[p.match_id]; if(!m || m.final_home_goals===null || m.final_away_goals===null) continue;
+        const pts = puntosPartido(p.home_goals,p.away_goals,m.final_home_goals,m.final_away_goals);
+        const key = `${p.user_id}`; puntos[key] = (puntos[key]||0) + pts;
+        await supabase.from('scores').upsert({ user_id:p.user_id, match_id:p.match_id, matchday_id:jornadaId, points:pts }, { onConflict:'user_id,match_id' });
+      }
+      for(const [user_id,total] of Object.entries(puntos)){
+        await supabase.from('scores_totals').upsert({ user_id, matchday_id:jornadaId, points_total: total }, { onConflict:'user_id,matchday_id' });
+      }
+      toast(qs('#msgAdmin'),'Puntuaciones recalculadas.');
+      await renderClasificacion();
+    }
+    qs('#btnGuardarResultados')?.addEventListener('click', guardarResultados);
+    qs('#btnCalcular')?.addEventListener('click', calcularPuntuaciones);
+    qs('#btnCrearJornada')?.addEventListener('click', crearJornada);
+    qs('#btnImportarPartidos')?.addEventListener('click', importarPartidos);
+    qs('#btnRefrescarA')?.addEventListener('click', ()=> listarPartidos(Number(qs('#selJornadaA').value),'#listPartidosA','admin'));
+    async function crearJornada(){ const name = qs('#jName').value.trim(); if(!name) return alert('Nombre de jornada'); const { error } = await supabase.from('matchdays').insert({ name }); if(error){ alert(error.message); return; } await cargarJornadas('#selJornada'); await cargarJornadas('#selJornadaC'); await cargarJornadas('#selJornadaA'); await cargarJornadas('#selJornadaTarget'); alert('Jornada creada'); }
+    async function importarPartidos(){ const jId = Number(qs('#selJornadaTarget').value); const txt = qs('#bulkPartidos').value.trim(); if(!txt) return alert('Pega la lista de partidos'); const lines = txt.split(/\n+/).map(s=>s.trim()).filter(Boolean); for(const line of lines){ const [teams, dt] = line.split(';').map(s=>s.trim()); if(!teams||!dt) continue; const [home, away] = teams.split('–').map(s=>s.trim()); if(!home||!away) continue; await supabase.from('matches').insert({ matchday_id:jId, home_team:home, away_team:away, kickoff_at:new Date(dt).toISOString() }); } alert('Partidos importados'); await listarPartidos(jId,'#listPartidosA','admin'); }
+
+    // ===== Clasificación =====
+    async function renderClasificacion(){ const ligaId = Number(qs('#selLigaC').value); const jId = Number(qs('#selJornadaC').value); const { data } = await supabase.rpc('clasificacion_liga', { p_liga_id: ligaId, p_matchday_id: jId }); const cont = qs('#tablaClasif'); if(!data||data.length===0){ cont.innerHTML = '<p class="muted">Sin datos.</p>'; } else { cont.innerHTML = `<table><thead><tr><th>#</th><th>Usuario</th><th>Puntos jornada</th><th>Puntos totales</th></tr></thead><tbody>${data.map((r,i)=>`<tr><td>${i+1}</td><td>${r.display_name||r.email}</td><td>${r.points_jornada||0}</td><td>${r.points_total||0}</td></tr>`).join('')}</tbody></table>`; } const { data: ligaTable } = await supabase.rpc('clasificacion_por_ligas', { p_matchday_id: jId }); const contL = qs('#tablaLigas'); contL.innerHTML = (ligaTable && ligaTable.length) ? `<table><thead><tr><th>#</th><th>Liga</th><th>Miembros</th><th>Puntos medios (Top 3)</th></tr></thead><tbody>${ligaTable.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.members}</td><td>${r.avg_top3?.toFixed(1) || 0}</td></tr>`).join('')}</tbody></table>` : '<p class="muted">Sin datos.</p>'; }
+
+    // Mostrar/ocultar Admin en menú tras login
+    (async()=>{ const isA = await ensureAdmin(); qs('#linkAdmin').classList.toggle('hidden', !isA); })();
+
+    // ===== Toggle de modo oscuro =====
+    const themeToggle = qs('#themeToggle');
+    const body = document.body;
+    
+    // Cargar tema guardado
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    body.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+    
+    themeToggle?.addEventListener('click', () => {
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+    
+    function updateThemeIcon(theme) {
+      if (themeToggle) {
+        themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        themeToggle.title = theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+      }
+    }
+
+    // ===== Mejoras de animaciones =====
+    // Intersection Observer para animaciones de scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Aplicar animaciones a las tarjetas
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = qsa('.cat');
+      cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+      });
+    });
+
+    // Mejorar animación del carrusel
+    function activate(idx){ 
+      slides.forEach((s,i)=> {
+        s.classList.toggle('active', i===idx);
+        s.style.opacity = i===idx ? '1' : '0';
+        s.style.transform = i===idx ? 'scale(1)' : 'scale(1.05)';
+      }); 
+      qsa('.dot').forEach((d,i)=> d.classList.toggle('active', i===idx)); 
+      cur=idx; 
+    }
+  </script>
 </body>
 </html>
